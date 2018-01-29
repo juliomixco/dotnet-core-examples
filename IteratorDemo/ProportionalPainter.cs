@@ -6,14 +6,17 @@ namespace IteratorDemo
   {
     public TimeSpan TimePerSqMeter { get; set; }
     public double DollarPerHour { get; set; }
-    bool IPainter.IsAvailable => throw new NotImplementedException();
 
+    public bool IsAvailable => true;
 
+    public double EstimateCompensation(double sqMeters)
+    {
+      return this.EstimateTimeToPaint(sqMeters).TotalHours * this.DollarPerHour;
+    }
 
-
-    TimeSpan EstimateTimeToPaint(double sqMeters) => 
-      TimeSpan.FromHours(this.TimePerSqMeter.TotalHours * sqMeters);
-    double IPainter.EstimateCompensation(double sqMeters) =>
-      this.EstimateTimeToPaint(sqMeters).TotalHours * this.DollarPerHour;
+    public TimeSpan EstimateTimeToPaint(double sqMeters)
+    {
+      return TimeSpan.FromHours(this.TimePerSqMeter.TotalHours * sqMeters);
+    }
   }
 }
